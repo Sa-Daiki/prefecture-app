@@ -9,7 +9,7 @@ export const switchErrorResponse = (
 ): undefined | ApiErrorType => {
   if (isForbiddenOrNotFoundType(mayBeError)) {
     if (mayBeError.statusCode === "403")
-      return { statusCode: 403, message: "リトライしてください" };
+      return { statusCode: 403, message: "権限がありません" };
 
     if (mayBeError.statusCode === "404")
       return { statusCode: 404, message: "見つかりませんでした" };

@@ -11,7 +11,6 @@ export const fetchPrefectures = async (): Promise<
       headers: { "X-API-KEY": API_KEY },
     })
     .json<PrefecturesType | ApiErrorType>();
-  console.log(response);
   const error = switchErrorResponse(response);
   if (!error) return response;
 
