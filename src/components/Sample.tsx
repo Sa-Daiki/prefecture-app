@@ -1,5 +1,7 @@
+import Sample2 from "./sample/sample2";
+
 const Sample = (): JSX.Element => {
-  return <div>Enter</div>;
+  return <Sample2 />;
 };
 
 export default Sample;
