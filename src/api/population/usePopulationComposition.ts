@@ -1,48 +1,44 @@
-import { Dispatch, SetStateAction, useState } from "react";
-import useSWRImmutable from "swr/immutable";
-import { ApiErrorType } from "../error";
+import { useQueries } from "@tanstack/react-query";
+import { fetcher } from "../fetcher";
+import { isPopulationCompositionType, PopulationCompositionType } from "./type";
 
-export type PopulationCompositionType = {
-  message: null;
-  result: {
-    boundaryYear: number;
-    data: Array<{
-      label: string;
-      data: Array<{
-        year: number;
-        value: number;
-        rate?: number;
-      }>;
-    }>;
-  };
-};
-
-export type FetcherType = {
-  data?: PopulationCompositionType;
-  error?: ApiErrorType;
+type FetcherType = {
+  error: boolean;
   isLoading: boolean;
-  setShouldFetch: Dispatch<SetStateAction<boolean>>;
+  populationCompositionList: Array<PopulationCompositionType | undefined>;
 };
 
-export const usePopulationComposition = (prefCode: number): FetcherType => {
-  const [shouldFetch, setShouldFetch] = useState(false);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const { data, error } = useSWRImmutable<
-    PopulationCompositionType,
-    ApiErrorType
-  >(
-    shouldFetch
-      ? "population/composition/perYear?" +
-          new URLSearchParams({
-            prefCode: prefCode.toString(),
-          }).toString()
-      : null
-  );
+const queriesFactory = (queryKeys: number[]) => {
+  const queries = [];
+  for (let i = 0; i < queryKeys.length; i++) {
+    const queryKey = queryKeys[i];
+    queries.push({
+      queryKey: [queryKey],
+      queryFn: async () => await fetcher(queryKey.toString()),
+      staleTime: Infinity,
+    });
+  }
+
+  return queries;
+};
+
+export const usePopulationComposition = (prefCode: number[]): FetcherType => {
+  const queries = queriesFactory(prefCode);
+
+  const results = useQueries({ queries });
+
+  const error = results.some((result) => result.error !== null);
+  const isLoading = results.some((result) => result.isLoading !== null);
+  const populationCompositionList = results.map((queryResult) => {
+    const data = queryResult.data as PopulationCompositionType | undefined;
+    if (data && isPopulationCompositionType(data)) return data;
+
+    return undefined;
+  });
 
   return {
-    data,
     error,
-    isLoading: !error && !data,
-    setShouldFetch,
+    isLoading,
+    populationCompositionList,
   };
 };
