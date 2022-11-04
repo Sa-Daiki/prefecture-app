@@ -17,8 +17,9 @@ export const Checkbox = ({
 
   return (
     <label htmlFor={String(prefCode)}>
-      {prefName}
       <input type="checkbox" id={String(prefCode)} onChange={onChange} />
+      {prefName}
     </label>
   );
 };
+export default Checkbox;
