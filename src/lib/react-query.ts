@@ -12,7 +12,6 @@ const queryConfig = {
     retry: false,
     refetchOnWindowFocus: false,
     useErrorBoundary: queryErrorBoundary,
-    cacheTime: 30000,
   },
 };
 
