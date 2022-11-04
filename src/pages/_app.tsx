@@ -1,7 +1,15 @@
 import "../styles/globals.css";
+import { NextPageWithLayout } from "next";
 import type { AppProps } from "next/app";
 
-const App = ({ Component, pageProps }: AppProps): JSX.Element => {
-  return <Component {...pageProps} />;
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
 };
-export default App;
+
+const MyApp = ({ Component, pageProps }: AppPropsWithLayout): JSX.Element => {
+  const getLayout = Component.getLayout ?? ((page) => page);
+
+  /* eslint-disable-next-line react/jsx-props-no-spreading */
+  return getLayout(<Component {...pageProps} />);
+};
+export default MyApp;

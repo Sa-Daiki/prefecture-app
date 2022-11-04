@@ -30,3 +30,11 @@ export const isTooManyRequestType = (
 
   return typeof e.message === "string";
 };
+
+export const isApiError = (error: unknown): error is ApiErrorType => {
+  const _error = error as ApiErrorType;
+
+  return (
+    typeof _error.statusCode === "number" && typeof _error.message === "string"
+  );
+};
