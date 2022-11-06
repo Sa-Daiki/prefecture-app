@@ -17,11 +17,11 @@ export const genDatasets = (
     return prefectureObj;
   };
 
-  populationCompositionList.forEach((elem, i) => {
+  populationCompositionList.forEach((compositionList, i) => {
     const arr: number[] = [];
     const obj = genPrefectureObj(i);
-    elem?.forEach((elem2) => {
-      arr.push(elem2.value);
+    compositionList?.forEach((composition) => {
+      arr.push(composition.value);
     });
     obj.data = arr;
     obj.borderColor = getRandomColor();
