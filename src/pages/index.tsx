@@ -17,6 +17,7 @@ import { Checkbox } from "@/components/Checkbox";
 import { ApiErrorType, isApiError } from "@/api/error";
 import { usePopulationComposition } from "@/api/population/usePopulationComposition";
 import { fetchPrefectures, PrefecturesType } from "@/api/prefectures";
+import { setupConfig } from "@/lib/react-chartjs-2";
 import { queryClient } from "@/lib/react-query";
 import { getRandomColor } from "@/util/color";
 
@@ -31,19 +32,6 @@ ChartJS.register(
 );
 
 type PrefecturesProps = { data: PrefecturesType | ApiErrorType };
-
-const options = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: "top" as const,
-    },
-    title: {
-      display: true,
-      text: "都道府県一覧グラフ",
-    },
-  },
-};
 
 const Index: NextPageWithLayout<PrefecturesProps> = (props) => {
   const [checkedPrefCode, setCheckedPrefCode] = useState<number[]>([]);
@@ -102,7 +90,7 @@ const Index: NextPageWithLayout<PrefecturesProps> = (props) => {
           key={prefecture.prefCode}
         />
       ))}
-      <Line options={options} data={data} />
+      <Line options={setupConfig("人口統計グラフ")} data={data} />
     </>
   );
 };
