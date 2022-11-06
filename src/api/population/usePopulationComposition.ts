@@ -1,11 +1,15 @@
 import { useQueries } from "@tanstack/react-query";
 import { fetcher } from "../fetcher";
-import { isPopulationCompositionType, PopulationCompositionType } from "./type";
+import {
+  DataType,
+  isPopulationCompositionType,
+  PopulationCompositionType,
+} from "./type";
 
 type FetcherType = {
   error: boolean;
   isLoading: boolean;
-  populationCompositionList: Array<PopulationCompositionType | undefined>;
+  populationCompositionList: Array<DataType[] | undefined>;
 };
 
 const queriesFactory = (queryKeys: number[]) => {
@@ -24,14 +28,12 @@ const queriesFactory = (queryKeys: number[]) => {
 
 export const usePopulationComposition = (prefCode: number[]): FetcherType => {
   const queries = queriesFactory(prefCode);
-
   const results = useQueries({ queries });
-
   const error = results.some((result) => result.error !== null);
   const isLoading = results.some((result) => result.isLoading !== null);
   const populationCompositionList = results.map((queryResult) => {
     const data = queryResult.data as PopulationCompositionType | undefined;
-    if (data && isPopulationCompositionType(data)) return data;
+    if (data && isPopulationCompositionType(data)) return data.data[0].data;
 
     return undefined;
   });
