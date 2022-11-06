@@ -37,8 +37,10 @@ export const Chart = ({ data, checkedPrefCode }: ChartProps): JSX.Element => {
 
   return (
     <Line
-      options={setupConfig("人口構成比グラフ")}
+      width={5}
+      height={3}
       data={{ labels, datasets }}
+      options={setupConfig("年代別人口構成グラフ")}
     />
   );
 };
