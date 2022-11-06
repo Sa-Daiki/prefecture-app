@@ -38,8 +38,8 @@ export const getStaticProps: GetStaticProps = async () => {
   try {
     const data = await fetchPrefectures();
 
-    return { props: { data }, revalidate: 6000 };
+    return { props: { data } };
   } catch (_) {
-    return { notFound: true, revalidate: 10 };
+    return { notFound: true };
   }
 };
