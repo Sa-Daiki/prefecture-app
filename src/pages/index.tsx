@@ -90,7 +90,7 @@ const Index: NextPageWithLayout<PrefecturesProps> = (props) => {
           key={prefecture.prefCode}
         />
       ))}
-      <Line options={setupConfig("人口統計グラフ")} data={data} />
+      <Line options={setupConfig("人口構成比グラフ")} data={data} />
     </>
   );
 };
