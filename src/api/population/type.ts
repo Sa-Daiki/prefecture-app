@@ -3,7 +3,7 @@ type LabelAndDataType = {
   data: DataType[];
 };
 
-type DataType = {
+export type DataType = {
   year: number;
   value: number;
   rate?: number;
