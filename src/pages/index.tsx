@@ -1,84 +1,18 @@
-/* eslint-disable padding-line-between-statements */
 import { useState } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
 import { GetStaticProps, NextPageWithLayout } from "next";
-import { Line } from "react-chartjs-2";
+import { Chart } from "@/components/Chart";
 import { Checkbox } from "@/components/Checkbox";
 import { ApiErrorType, isApiError } from "@/api/error";
-import { usePopulationComposition } from "@/api/population/usePopulationComposition";
 import { fetchPrefectures, PrefecturesType } from "@/api/prefectures";
-import { setupConfig } from "@/lib/react-chartjs-2";
 import { queryClient } from "@/lib/react-query";
-import { getRandomColor } from "@/util/color";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
 
 type PrefecturesProps = { data: PrefecturesType | ApiErrorType };
 
 const Index: NextPageWithLayout<PrefecturesProps> = (props) => {
-  const [checkedPrefCode, setCheckedPrefCode] = useState<number[]>([]);
   if (isApiError(props.data)) throw new Error("invalid type");
   const { result: prefectures } = props.data;
-  const { isLoading, error, populationCompositionList } =
-    usePopulationComposition(checkedPrefCode);
-  console.log(isLoading, error);
-
-  const [labels, setLabels] = useState<number[]>([]);
-  if (!labels.length) {
-    populationCompositionList.forEach((elem) => {
-      elem?.forEach((_, i) => {
-        setLabels((prev) => [...prev, elem?.[i].year]);
-      });
-    });
-  }
-
-  const createObj = (i: number) => {
-    if (isApiError(props.data)) throw new Error("invalid type");
-    const obj: { label: string; data: number[]; borderColor: string } = {
-      label: "",
-      data: [],
-      borderColor: "",
-    };
-    obj.label = props.data.result[checkedPrefCode[i] - 1].prefName;
-    return obj;
-  };
-
-  const _arr: Array<{ label: string; data: number[]; borderColor: string }> =
-    [];
-  populationCompositionList.forEach((elem, i) => {
-    const arr: number[] = [];
-    const obj = createObj(i);
-    elem?.forEach((elem2) => {
-      arr.push(elem2.value);
-    });
-    obj.data = arr;
-    obj.borderColor = getRandomColor();
-    _arr.push(obj);
-  });
-  console.log(_arr);
-
-  const data = {
-    labels,
-    datasets: _arr,
-  };
+  const [checkedPrefCode, setCheckedPrefCode] = useState<number[]>([]);
 
   return (
     <>
@@ -90,7 +24,7 @@ const Index: NextPageWithLayout<PrefecturesProps> = (props) => {
           key={prefecture.prefCode}
         />
       ))}
-      <Line options={setupConfig("人口構成比グラフ")} data={data} />
+      <Chart data={props.data} checkedPrefCode={checkedPrefCode} />
     </>
   );
 };
@@ -103,6 +37,7 @@ export default Index;
 export const getStaticProps: GetStaticProps = async () => {
   try {
     const data = await fetchPrefectures();
+
     return { props: { data }, revalidate: 6000 };
   } catch (_) {
     return { notFound: true, revalidate: 10 };
