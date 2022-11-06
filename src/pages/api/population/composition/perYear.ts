@@ -8,6 +8,7 @@ const handler: NextApiHandler = async (req, res) => {
     return res.status(500).json({ message: "Invalid Type" });
   }
   const { prefCode } = req.query;
+  res.setHeader("Access-Control-Allow-Origin", "*");
   try {
     const response = await fetchPopulationCompositionPerYear(prefCode);
     if (isApiError(response)) {
