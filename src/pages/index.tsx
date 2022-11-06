@@ -18,6 +18,7 @@ import { ApiErrorType, isApiError } from "@/api/error";
 import { usePopulationComposition } from "@/api/population/usePopulationComposition";
 import { fetchPrefectures, PrefecturesType } from "@/api/prefectures";
 import { queryClient } from "@/lib/react-query";
+import { getRandomColor } from "@/util/color";
 
 ChartJS.register(
   CategoryScale,
@@ -42,15 +43,6 @@ const options = {
       text: "都道府県一覧グラフ",
     },
   },
-};
-
-const getRandomColor = (): string => {
-  const get256 = () => {
-    return Math.floor(Math.random() * 256);
-  };
-  const [r, g, b] = [get256(), get256(), get256()];
-  const color = `rgb(${r}, ${g}, ${b})`;
-  return color;
 };
 
 const Index: NextPageWithLayout<PrefecturesProps> = (props) => {
