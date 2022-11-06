@@ -1,34 +1,60 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# prefecture-app
 
-First, run the development server:
+チェックした都道府県の人工構成比をグラフで表示することができる簡単なWebアプリです。
 
-```bash
-npm run dev
-# or
-yarn dev
+
+## 使用技術
+
+ - [React](https://ja.reactjs.org/)
+    - version18.2を使用。
+ - [Next.js](https://nextjs.org/)
+    - version13を使用。experimentalは未使用。
+ - [TypeScript](https://www.typescriptlang.org/)
+    - コードの安全性を高めたり、可読性を上げたりする目的で使用。
+ - [ESLint](https://eslint.org/)
+    - 有識者の方が作られたルールに則ることができるので、一定の品質が担保されると考えて使用。
+    - [りあクト！ TypeScriptで始めるつらくないReact開発 第4版【② React基礎編】](https://booth.pm/ja/items/2368019)
+        を参考に作成。
+- [Prettier](https://prettier.io/)
+    - ESLintでカバーできないフォーマットの部分統一を担当するために使用。
+    - 上記同様、[りあクト！ TypeScriptで始めるつらくないReact開発 第4版【② React基礎編】](https://booth.pm/ja/items/2368019)
+        を参考に作成。
+- [StyleLint](https://stylelint.io/)
+    - ESLintのCSS版です。
+    - 上記同様、[りあクト！ TypeScriptで始めるつらくないReact開発 第4版【② React基礎編】](https://booth.pm/ja/items/2368019)
+        を参考に作成。
+- [ky](https://github.com/sindresorhus/ky)
+    - fetchを使いやすくしてくれているライブラリです。
+    - axiosはXMLHttpRequestを使用しているため、基本的に今後も不採用。
+- [Tanstack Query](https://tanstack.com/query/v4)
+    - [SWR](https://swr.vercel.app/ja)も選択肢にありましたが、前者の方が多機能で、その機能を使いたかったため、今回は不採用。
+- [react-chartjs-2](https://react-chartjs-2.js.org/)
+    - 他にも様々な選択肢がありましたが、渡すデータを比較的楽に作成できそうだったため、こちらを採用。
+- [GitMoji](https://gitmoji.dev/)
+    - Commitメッセージの意図を分かりやすくできます。
+- [simple-git-hooks](https://github.com/toplenboren/simple-git-hooks)
+    - Commitする前にコマンドを流したりできます。
+
+
+
+## 開発
+
+開発を行う場合
+
+```
+yarn dev // localhost:3000 で立ち上がります
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+本番の動作確認を行う場合
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```
+yarn build
+yarn start // localhost:3000 で立ち上がります。
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## 感想
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Testの記述やリファクタリング、パフォーマンス向上など、やらなければならないことがまだまだ残ってしまている。また、Issueにあげたものでも解決できていないものがある。
+だが、初めての経験が様々なある中で、アプリが動作する形にできたことはとても良かったと思う。
