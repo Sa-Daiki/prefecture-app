@@ -6,10 +6,7 @@ export const fetcher = async (
 ): Promise<ApiErrorType | unknown> => {
   const response = await frontendApiClient.get(
     "population/composition/perYear?" +
-      new URLSearchParams({ prefCode }).toString(),
-    {
-      mode: "no-cors",
-    }
+      new URLSearchParams({ prefCode }).toString()
   );
   const data = await response.json();
   const error = switchErrorResponse(data);
