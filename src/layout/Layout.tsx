@@ -5,7 +5,7 @@ type LayoutProps = { children: ReactNode };
 export const Layout = ({ children }: LayoutProps): JSX.Element => (
   <div style={layoutWrapper}>
     <header style={layoutHeader}>
-      <p style={headerTitle}>採用課題</p>
+      <p style={headerTitle}>都道府県アプリ</p>
     </header>
     <main style={mainContent}>{children}</main>
   </div>
