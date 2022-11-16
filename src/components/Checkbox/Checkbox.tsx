@@ -25,7 +25,6 @@ export const Checkbox = ({
     </div>
   );
 };
-export default Checkbox;
 
 const prefectureWrapper = {
   padding: "10px",

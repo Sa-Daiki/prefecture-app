@@ -38,5 +38,3 @@ const headerTitle = {
 const mainContent = {
   flexGrow: "1",
 } as const;
-
-export default Layout;

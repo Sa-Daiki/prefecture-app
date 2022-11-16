@@ -3,14 +3,14 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { GetStaticProps, NextPageWithLayout } from "next";
 import { Chart } from "@/components/Chart";
 import { Checkbox } from "@/components/Checkbox";
-import Layout from "@/layout/Layout";
 import { ApiErrorType, isApiError } from "@/api/error";
 import { fetchPrefectures, PrefecturesType } from "@/api/prefectures";
+import { Layout } from "@/layout";
 import { queryClient } from "@/lib/react-query";
 
 type PrefecturesProps = { data: PrefecturesType | ApiErrorType };
 
-const Index: NextPageWithLayout<PrefecturesProps> = (props) => {
+export const Index: NextPageWithLayout<PrefecturesProps> = (props) => {
   if (isApiError(props.data)) throw new Error("invalid type");
   const { result: prefectures } = props.data;
   const [checkedPrefCode, setCheckedPrefCode] = useState<number[]>([]);
