@@ -1,13 +1,11 @@
-import { useQueries } from "@tanstack/react-query";
+import { useMemo } from "react";
+import { ApiErrorType } from "../error";
 import { fetcher } from "../fetcher";
-import {
-  DataType,
-  isPopulationCompositionType,
-  PopulationCompositionType,
-} from "./type";
+import { DataType, PopulationCompositionType } from "./type";
+import { useQueriesWrapper } from "@/lib/react-query";
 
 type FetcherType = {
-  error: boolean;
+  error: Array<ApiErrorType | null>;
   isLoading: boolean;
   populationCompositionList: Array<DataType[] | undefined>;
 };
@@ -18,7 +16,8 @@ const queriesFactory = (queryKeys: number[]) => {
     const queryKey = queryKeys[i];
     queries.push({
       queryKey: [queryKey],
-      queryFn: async () => await fetcher(queryKey.toString()),
+      queryFn: async () =>
+        await fetcher<PopulationCompositionType>(queryKey.toString()),
       staleTime: Infinity,
     });
   }
@@ -26,18 +25,16 @@ const queriesFactory = (queryKeys: number[]) => {
   return queries;
 };
 
-export const usePopulationComposition = (prefCode: number[]): FetcherType => {
-  const queries = queriesFactory(prefCode);
-  const results = useQueries({ queries });
-  const error = results.some((result) => result.error !== null);
-  const isLoading = results.some((result) => result.isLoading !== null);
-  const populationCompositionList = results.map((queryResult) => {
-    const data = queryResult.data as PopulationCompositionType | undefined;
-    // 必要なデータを抽出
-    if (data && isPopulationCompositionType(data)) return data.data[0].data;
+export const usePopulationComposition = (
+  prefCodeList: number[]
+): FetcherType => {
+  const queries = queriesFactory(prefCodeList);
 
-    return undefined;
-  });
+  const { data, error, isLoading } = useQueriesWrapper(queries);
+  const populationCompositionList = useMemo(
+    () => data.map((data) => data?.data[0].data),
+    [data]
+  );
 
   return {
     error,
