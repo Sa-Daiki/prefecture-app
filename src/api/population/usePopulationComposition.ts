@@ -33,6 +33,7 @@ export const usePopulationComposition = (prefCode: number[]): FetcherType => {
   const isLoading = results.some((result) => result.isLoading !== null);
   const populationCompositionList = results.map((queryResult) => {
     const data = queryResult.data as PopulationCompositionType | undefined;
+    // 必要なデータを抽出
     if (data && isPopulationCompositionType(data)) return data.data[0].data;
 
     return undefined;

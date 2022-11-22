@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { DataType } from "@/api/population/type";
 
+// 横軸のラベルを配列に格納
 export const useGenLabels = (
   populationCompositionList: Array<DataType[] | undefined>
 ): number[] => {

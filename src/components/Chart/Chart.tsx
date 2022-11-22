@@ -44,5 +44,3 @@ export const Chart = ({ data, checkedPrefCode }: ChartProps): JSX.Element => {
     />
   );
 };
-
-export default Chart;
