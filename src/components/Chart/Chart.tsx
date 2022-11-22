@@ -1,3 +1,4 @@
+import { FC } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -25,7 +26,7 @@ ChartJS.register(
   Legend
 );
 
-export const Chart = ({ data, checkedPrefCode }: ChartProps): JSX.Element => {
+export const Chart: FC<ChartProps> = ({ data, checkedPrefCode }) => {
   const { populationCompositionList } =
     usePopulationComposition(checkedPrefCode);
   const labels = useGenLabels(populationCompositionList);

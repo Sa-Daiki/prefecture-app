@@ -1,11 +1,11 @@
-import { CSSProperties, useCallback } from "react";
+import { CSSProperties, FC, useCallback } from "react";
 import { CheckBoxProps } from "./type";
 
-export const Checkbox = ({
+export const Checkbox: FC<CheckBoxProps> = ({
   prefCode,
   prefName,
   setCheckedPrefCode,
-}: CheckBoxProps): JSX.Element => {
+}) => {
   const onChange = useCallback(() => {
     setCheckedPrefCode((code) => {
       if (!code.length) return [prefCode];
