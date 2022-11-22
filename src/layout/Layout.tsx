@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 
 type LayoutProps = { children: ReactNode };
 
@@ -11,14 +11,14 @@ export const Layout = ({ children }: LayoutProps): JSX.Element => (
   </div>
 );
 
-const layoutWrapper = {
+const layoutWrapper: CSSProperties = {
   margin: "10px",
   display: "flex",
   flexDirection: "column",
   minHeight: "100vh",
 } as const;
 
-const layoutHeader = {
+const layoutHeader: CSSProperties = {
   position: "sticky",
   top: 0,
   width: "100%",
@@ -30,11 +30,11 @@ const layoutHeader = {
   justifyContent: "center",
 } as const;
 
-const headerTitle = {
+const headerTitle: CSSProperties = {
   fontWeight: "bold",
   fontSize: "30px",
 } as const;
 
-const mainContent = {
+const mainContent: CSSProperties = {
   flexGrow: "1",
 } as const;

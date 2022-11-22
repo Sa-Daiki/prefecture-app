@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { CSSProperties, useCallback } from "react";
 import { CheckBoxProps } from "./type";
 
 export const Checkbox = ({
@@ -26,11 +26,11 @@ export const Checkbox = ({
   );
 };
 
-const prefectureWrapper = {
+const prefectureWrapper: CSSProperties = {
   padding: "10px",
 } as const;
 
-const prefectureLabel = {
+const prefectureLabel: CSSProperties = {
   backgroundColor: "gray",
   padding: "8px",
   borderRadius: "25px",
