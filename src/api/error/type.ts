@@ -11,30 +11,33 @@ export type ApiErrorType = {
   message: string;
 };
 
+const isNotNullish = (data: unknown): data is Record<string, unknown> =>
+  data != null;
+
 export const isForbiddenOrNotFoundType = (
   error: unknown
 ): error is ForbiddenOrNotFoundType => {
-  const e = error as ForbiddenOrNotFoundType;
+  if (!isNotNullish(error)) return false;
 
   return (
-    typeof e.statusCode === "string" &&
-    typeof e.message === "string" &&
-    typeof e.description === "string"
+    typeof error.statusCode === "string" &&
+    typeof error.message === "string" &&
+    typeof error.description === "string"
   );
 };
 
 export const isTooManyRequestType = (
   error: unknown
 ): error is TooManyRequestType => {
-  const e = error as TooManyRequestType;
+  if (!isNotNullish(error)) return false;
 
-  return typeof e.message === "string";
+  return typeof error.message === "string";
 };
 
 export const isApiError = (error: unknown): error is ApiErrorType => {
-  const _error = error as ApiErrorType;
+  if (!isNotNullish(error)) return false;
 
   return (
-    typeof _error.statusCode === "number" && typeof _error.message === "string"
+    typeof error.statusCode === "number" && typeof error.message === "string"
   );
 };
