@@ -16,8 +16,7 @@ export const fetchPopulationCompositionPerYear = async (
     .json<ResultType | ApiErrorType>();
   const error = switchErrorResponse(response);
   if (!error) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { message, ...rest } = response as ResultType;
+    const { message: _, ...rest } = response as ResultType;
 
     return rest.result;
   }
